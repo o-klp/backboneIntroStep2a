@@ -12,12 +12,25 @@
         //in this initialize function, we are taking a message argument, this means that later, when we say 'new Comment', we will be able to pass it an argument and have that available here.  For example, in this case, we will later be instantiating the Comment class like this: new Comment('my message')
         initialize: function(message){
           //set the initial values for 'votes' to 0 and 'message' to the message passed in
+          this.set({votes: 0});
+          this.set({message: message});
+          // this.votes = 0;
+          // this.message = message;
         },
         votes: function(){
           //return the votes attribute on this model.  Stuck?  check out http://backbonejs.org/#Model-get
+          return this.get('votes');
         },
         upvote: function(){
           //write a function that will set the 'votes' to the current votecount plus one.  Stuck?  check out http://backbonejs.org/#Model-set
+          var voteCount = this.get('votes');
+          voteCount++;
+          this.set({votes: voteCount});
+        },
+        downvote: function(){
+          var voteCount = this.get('votes');
+          voteCount--;
+          this.set({votes: voteCount});
         }
         //write the downvote function, don't forget to add a comma above if you are adding a new function in this object.  It should be pretty similar to the function above.
       });
@@ -70,10 +83,10 @@
       
       //this is the spot where we actually put the view on the page.  This is why we had to return from the render function in the commentView.  Uncomment the line below to get the stuff on the page!
 
-      //$('body').append(commentView.render());
+      $('body').append(commentView.render());
 
       //Here the number of votes should be 0.  We set that as the initial default value in the comment model.  Let's change it and see our eventlistener in action.  uncomment the line below and reload the page, it should now say '1' to the left of the comment. 
-      //comment.upvote();
+      comment.upvote();
 
       //play with this in your console.  You can modify the comment object in the same way we just did, comment.upvote() or comment.downvote().  Try voting up and voting down a couple times and watch the eventlistener auto update the view.  Pretty cool, eh?
 
